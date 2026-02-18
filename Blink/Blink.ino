@@ -4,7 +4,8 @@
 Developer: CorDae
 Date: 2.13.2026
 
-  Turns an LED on for one second, then off for one second, repeatedly.
+ Turns an LED on for one second, then off for one second, repeatedly.
+
 
   Most Arduinos have an on-board LED you can control. On the UNO, MEGA and ZERO
   it is attached to digital pin 13, on MKR1000 on pin 6. LED_BUILTIN is set to
@@ -13,6 +14,7 @@ Date: 2.13.2026
   model, check the Technical Specs of your board at:
   https://docs.arduino.cc/hardware/
 
+
   modified 8 May 2014
   by Scott Fitzgerald
   modified 2 Sep 2016
@@ -20,25 +22,45 @@ Date: 2.13.2026
   modified 8 Sep 2016
   by Colby Newman
 
+
   This example code is in the public domain.
+
 
   https://docs.arduino.cc/built-in-examples/basics/Blink/
 */
 
-// the setup function runs once when you press reset or power the board
+
+int led1 = 10;
+int led2 = 9;
+int buzzer = 8;
+
 void setup() {
-  // initialize digital pin LED_BUILTIN as an output.
-  pinMode(10, OUTPUT);
-  pinMode(9, OUTPUT);
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  pinMode(buzzer, OUTPUT);
 }
 
-// the loop function runs over and over again forever
 void loop() {
-  digitalWrite(10, HIGH);  // turn the LED on (HIGH is the voltage level)
-  digitalWrite(9, LOW);   // turn the LED off by making the voltage LOW
-  delay(100);                      // wait for a second
 
-  digitalWrite(9, HIGH);  // turn the LED on (HIGH is the voltage level)
-  digitalWrite(10, LOW);   // turn the LED off by making the voltage LOW
-  delay(100);                      // wait for a second
+  // Siren going UP
+  for (int freq = 700; freq <= 1500; freq += 20) {
+
+    tone(buzzer, freq);
+
+    digitalWrite(led1, HIGH);
+    digitalWrite(led2, LOW);
+    delay(5);
   }
+
+  // Siren going DOWN
+  for (int freq = 1500; freq >= 700; freq -= 20) {
+
+    tone(buzzer, freq);
+
+    digitalWrite(led1, LOW);
+    digitalWrite(led2, HIGH);
+    delay(5);
+  }
+}
+
+
