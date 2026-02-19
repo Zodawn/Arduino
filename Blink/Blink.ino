@@ -29,15 +29,19 @@ Date: 2.13.2026
   https://docs.arduino.cc/built-in-examples/basics/Blink/
 */
 
-
 int led1 = 10;
 int led2 = 9;
 int buzzer = 8;
+int fadeLed = 3;
+
+int brightness = 0;
+int fadeAmount = 2;   // smaller number = slower fade
 
 void setup() {
   pinMode(led1, OUTPUT);
   pinMode(led2, OUTPUT);
   pinMode(buzzer, OUTPUT);
+  pinMode(fadeLed, OUTPUT);
 }
 
 void loop() {
@@ -49,7 +53,15 @@ void loop() {
 
     digitalWrite(led1, HIGH);
     digitalWrite(led2, LOW);
-    delay(5);
+
+    analogWrite(fadeLed, brightness);
+    brightness += fadeAmount;
+
+    if (brightness <= 0 || brightness >= 255) {
+      fadeAmount = -fadeAmount;
+    }
+
+    delay(8);   // slightly longer delay = smoother/slower
   }
 
   // Siren going DOWN
@@ -59,8 +71,14 @@ void loop() {
 
     digitalWrite(led1, LOW);
     digitalWrite(led2, HIGH);
-    delay(5);
+
+    analogWrite(fadeLed, brightness);
+    brightness += fadeAmount;
+
+    if (brightness <= 0 || brightness >= 255) {
+      fadeAmount = -fadeAmount;
+    }
+
+    delay(8);
   }
 }
-
-
